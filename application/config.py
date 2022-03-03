@@ -20,7 +20,7 @@ class BaseConfig(BaseSettings):
 class DBConfig(BaseSettings):
     """Class to store database configurations"""
 
-    DB_DSN: Optional[str]
+    DB_DSN: str
     DEFAULT_DB_CONNECTION_TIMEOUT: Optional[int] = 30
     AUTO_COMMIT: Optional[bool] = False
     AUTO_FLUSH: Optional[bool] = False
@@ -34,4 +34,3 @@ class ApplicationConfig(BaseConfig, DBConfig):
 
     SECRET_KEY: str
     APPLICATION_ROOT: Optional[str] = "/"
-

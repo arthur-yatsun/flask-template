@@ -3,7 +3,7 @@ from flask import Flask, render_template
 from db import engine
 from models import Base
 from config import ApplicationConfig
-from views import usd_view, euro_view, rub_view
+from views import transactions
 
 
 def get_application() -> Flask:
@@ -16,9 +16,7 @@ def get_application() -> Flask:
 
     Base.metadata.create_all(engine)
 
-    app.register_blueprint(usd_view)
-    app.register_blueprint(euro_view)
-    app.register_blueprint(rub_view)
+    app.register_blueprint(transactions, url_prefix="/")
 
     return app
 
