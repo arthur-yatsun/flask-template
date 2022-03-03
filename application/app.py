@@ -1,5 +1,7 @@
 from flask import Flask, render_template
 
+from db import engine
+from models import Base
 from config import ApplicationConfig
 from views import usd_view, euro_view, rub_view
 
@@ -8,9 +10,11 @@ def get_application() -> Flask:
     """Method to create an application to manage currency payments"""
 
     config = ApplicationConfig()
-    app = Flask(__name__)
 
+    app = Flask(__name__)
     app.config.update(**config.dict())
+
+    Base.metadata.create_all(engine)
 
     app.register_blueprint(usd_view)
     app.register_blueprint(euro_view)
