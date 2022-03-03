@@ -7,3 +7,11 @@ class Environment(Enum):
     DEV = "dev"
     QA = "qa"
     PROD = "prod"
+
+
+class Currency(Enum):
+    """Available currency"""
+
+    USD = "usd"
+    EUR = "euro"
+    RUB = "rub"
