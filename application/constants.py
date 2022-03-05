@@ -20,3 +20,15 @@ class Currency(Enum):
     @classmethod
     def get_currencies(cls) -> List:
         return [item.value for item in cls]
+
+
+class HTTPMethods:
+    GET = "GET"
+    POST = "POST"
+
+
+class TransactionFields:
+    VALUE = "value"
+    CURRENCY = "currency"
+    DESCRIPTION = "description"
+    CREATED_AT = "created_at"
