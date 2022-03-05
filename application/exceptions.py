@@ -1,6 +1,2 @@
-class CustomException(Exception):
+class InvalidTypeProvided(Exception):
     """Invalid sign string provided"""
-
-
-if __name__ == '__main__':
-    print(type(CustomException()))

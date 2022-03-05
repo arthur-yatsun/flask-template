@@ -2,7 +2,7 @@ import unittest
 
 from parameterized import parameterized
 
-from exceptions import CustomException
+from exceptions import InvalidTypeProvided
 from utils import generate_sign
 
 
@@ -21,6 +21,6 @@ class TestUtils(unittest.TestCase):
     def test_generate_sign_with_invalid_value(self):
         input_data = "test_value"
 
-        with self.assertRaises(CustomException):
+        with self.assertRaises(InvalidTypeProvided):
             generate_sign(input_data)
 

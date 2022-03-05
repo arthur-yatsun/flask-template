@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import List
 
 
 class Environment(Enum):
@@ -12,6 +13,10 @@ class Environment(Enum):
 class Currency(Enum):
     """Available currency"""
 
-    USD = "usd"
-    EUR = "euro"
-    RUB = "rub"
+    USD = "USD"
+    EUR = "EUR"
+    RUB = "RUB"
+
+    @classmethod
+    def get_currencies(cls) -> List:
+        return [item.value for item in cls]

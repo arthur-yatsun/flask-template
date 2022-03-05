@@ -1,26 +1,24 @@
 {% extends "base/base.html" %}
 
 {% block content %}
-<h1>
-    main page
-</h1>
 
 <form method="post">
-    <label for="title">Title</label>
+    <label for="sum">Sum of transaction: </label>
+    <input type="string" step=0.001 name="sum" placeholder="Enter sum" value="{{ request.form['sum'] }}"></input>
     <br>
-    <input type="text" name="title"
-           placeholder="Message title"
-           value="{{ request.form['title'] }}"></input>
     <br>
+    <label for="cars">Choose currency:</label>
+    <select id="cars" name="cars">
+        {% for currency in currencies %}
+            <option value="{{ currency }}"> {{ currency }}</option>
+        {% endfor %}
+    </select>
+    <br><br>
 
-    <label for="content">Message Content</label>
+    <label for="content">Description</label>
     <br>
-    <textarea name="content"
-              placeholder="Message content"
-              rows="15"
-              cols="60"
-              >{{ request.form['content'] }}</textarea>
-    <br>
+    <textarea name="content" placeholder="Description" rows="3" cols="50">{{ request.form['content'] }}</textarea>
+    <br><br>
     <button type="submit">Submit</button>
 </form>
 
