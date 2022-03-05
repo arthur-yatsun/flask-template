@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseSettings
+from pydantic import BaseSettings, PostgresDsn
 
 from constants import Environment
 
@@ -20,7 +20,7 @@ class BaseConfig(BaseSettings):
 class DBConfig(BaseSettings):
     """Class to store database configurations"""
 
-    DB_DSN: str
+    DB_DSN: PostgresDsn
 
     # engine config
     POOL_SIZE: Optional[int] = 10

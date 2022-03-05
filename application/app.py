@@ -11,14 +11,12 @@ def get_application() -> Flask:
 
     config = ApplicationConfig()
     db_engine = DBEngine(config=config)
+    Base.metadata.create_all(db_engine.get_engine())
 
     app = Flask(__name__)
     app.config.update(**config.dict())
 
-    Base.metadata.create_all(db_engine.get_engine())
-
     app.register_blueprint(transactions, url_prefix="/")
-
     return app
 
 
@@ -30,11 +28,6 @@ def page_not_found(error):
     """Method to handle 404 error"""
 
     return render_template("404.html")
-
-
-@app.teardown_appcontext
-def cleanup(response_or_exception):
-    pass
 
 
 if __name__ == '__main__':

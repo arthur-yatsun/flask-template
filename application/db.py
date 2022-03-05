@@ -7,6 +7,8 @@ from config import DBConfig
 
 
 class DBEngine:
+    """Wrapper for db engine"""
+
     _instance = None
 
     def __new__(cls, *args, **kwargs):
