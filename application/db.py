@@ -1,23 +1,53 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
+from typing import Optional
+
+from sqlalchemy import create_engine, engine
+from sqlalchemy.orm import sessionmaker
 
 from config import DBConfig
 
-config = DBConfig()
-engine = create_engine(config.DB_DSN, connect_args={
-    "connect_timeout": config.DEFAULT_DB_CONNECTION_TIMEOUT,
-})
 
-session_factory = sessionmaker(
-    bind=engine,
-    autocommit=config.AUTO_COMMIT,
-    autoflush=config.AUTO_FLUSH,
-)
+class DBEngine:
+    _instance = None
 
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super(DBEngine, cls).__new__(cls)
 
-def get_session() -> Session:
-    session = session_factory()
-    try:
-        yield session
-    except Exception as exc:
-        session.close()
+        return cls._instance
+
+    def __init__(self, config: Optional[DBConfig] = None):
+        self.config = config or DBConfig()
+        self._engine = self._create_engine(self.config)
+
+        self.session_factory = self._create_session_maker()
+
+    def _create_engine(self, config) -> engine:
+        """Method to create an engine depends on config"""
+
+        return create_engine(
+            url=config.DB_DSN,
+            connect_args={
+                "connect_timeout": self.config.DEFAULT_DB_CONNECTION_TIMEOUT,
+            }
+        )
+
+    def _create_session_maker(self) -> sessionmaker:
+        return sessionmaker(
+            bind=engine,
+            autocommit=self.config.AUTO_COMMIT,
+            autoflush=self.config.AUTO_FLUSH,
+        )
+
+    def get_engine(self) -> engine:
+        """Method to get db engine"""
+
+        return self._engine
+
+    def create_session(self):
+        """Method to create db session"""
+
+        session = self.session_factory()
+        try:
+            yield session
+        except Exception as exc:
+            session.close()
