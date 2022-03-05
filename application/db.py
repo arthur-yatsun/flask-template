@@ -1,7 +1,7 @@
 from typing import Optional
 
 from sqlalchemy import create_engine, engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, Session
 
 from config import DBConfig
 
@@ -16,26 +16,30 @@ class DBEngine:
         return cls._instance
 
     def __init__(self, config: Optional[DBConfig] = None):
-        self.config = config or DBConfig()
-        self._engine = self._create_engine(self.config)
+        config = config or DBConfig()
 
-        self.session_factory = self._create_session_maker()
+        self._engine = self._create_engine(config)
+        self._session_factory = self._create_session_maker(config)
 
     def _create_engine(self, config) -> engine:
-        """Method to create an engine depends on config"""
+        """Creates an engine depends on config"""
 
         return create_engine(
             url=config.DB_DSN,
+            pool_size=config.POOL_SIZE,
+            max_overflow=config.MAX_OVERFLOW,
             connect_args={
-                "connect_timeout": self.config.DEFAULT_DB_CONNECTION_TIMEOUT,
+                "connect_timeout": config.CONNECTION_TIMEOUT,
             }
         )
 
-    def _create_session_maker(self) -> sessionmaker:
+    def _create_session_maker(self, config) -> sessionmaker:
+        """Creates session factory"""
+
         return sessionmaker(
             bind=engine,
-            autocommit=self.config.AUTO_COMMIT,
-            autoflush=self.config.AUTO_FLUSH,
+            autocommit=config.AUTO_COMMIT,
+            autoflush=config.AUTO_FLUSH,
         )
 
     def get_engine(self) -> engine:
@@ -43,10 +47,10 @@ class DBEngine:
 
         return self._engine
 
-    def create_session(self):
+    def create_session(self) -> Session:
         """Method to create db session"""
 
-        session = self.session_factory()
+        session = self._session_factory()
         try:
             yield session
         except Exception as exc:

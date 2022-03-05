@@ -21,7 +21,13 @@ class DBConfig(BaseSettings):
     """Class to store database configurations"""
 
     DB_DSN: str
-    DEFAULT_DB_CONNECTION_TIMEOUT: Optional[int] = 30
+
+    # engine config
+    POOL_SIZE: Optional[int] = 10
+    MAX_OVERFLOW: Optional[int] = -1  # no overflow
+    CONNECTION_TIMEOUT: Optional[int] = 30
+
+    # session config
     AUTO_COMMIT: Optional[bool] = False
     AUTO_FLUSH: Optional[bool] = False
 
