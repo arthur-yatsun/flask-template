@@ -32,3 +32,8 @@ class TransactionFields:
     CURRENCY = "currency"
     DESCRIPTION = "description"
     CREATED_AT = "created_at"
+
+
+class SingTemplates:
+    PAY = "{amount}:{currency}:{shop_id}:{shop_order_id}{secret}"
+    BILL = "{amount}:{currency}:{payway}:{shop_id}:{shop_order_id}{secret}"

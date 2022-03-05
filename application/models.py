@@ -13,7 +13,7 @@ class Transaction(Base):
     __tablename__ = "transaction"
 
     id = Column(Integer, primary_key=True, index=True)
-    value = Column(Numeric, nullable=False)
+    amount = Column(Numeric, nullable=False)
     currency = Column(ChoiceType(Currency, impl=Integer()), nullable=False)
     description = Column(String(200), nullable=False)
 

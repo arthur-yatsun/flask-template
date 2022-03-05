@@ -1,7 +1,5 @@
 from flask import Flask, render_template
 
-from db import DBEngine
-from models import Base
 from config import ApplicationConfig
 from views import transactions
 
@@ -18,12 +16,13 @@ def get_application() -> Flask:
 
 app = get_application()
 
+# register blueprints
 app.register_blueprint(transactions, url_prefix="/")
 
 
 @app.errorhandler(404)
 def page_not_found(error):
-    """Method to handle 404 error"""
+    """Handles 404 error"""
 
     return render_template("404.html")
 
