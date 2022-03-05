@@ -10,17 +10,15 @@ def get_application() -> Flask:
     """Method to create an application to manage currency payments"""
 
     config = ApplicationConfig()
-    db_engine = DBEngine(config=config)
-    Base.metadata.create_all(db_engine.get_engine())
-
     app = Flask(__name__)
     app.config.update(**config.dict())
 
-    app.register_blueprint(transactions, url_prefix="/")
     return app
 
 
 app = get_application()
+
+app.register_blueprint(transactions, url_prefix="/")
 
 
 @app.errorhandler(404)
