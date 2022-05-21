@@ -1,6 +1,12 @@
-class InvalidTypeProvided(Exception):
-    """Invalid sign string provided"""
+class BaseException(Exception):
+    """Base exception class"""
+    def __init__(self, message):
+        super().__init__(message)
 
 
-class InvalidCurrencyValue(Exception):
-    """invalid currency value"""
+class FieldNotFound(BaseException):
+    """Field not found exception"""
+
+
+class BaseSessionError(BaseException):
+    """Base session error"""

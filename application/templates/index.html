@@ -2,24 +2,20 @@
 
 {% block content %}
 
-<form method="post">
-    <label for="value">Value: </label>
-    <input type="string" step=0.001 name="value" placeholder="Enter value"></input>
-    <br><br>
+<div class="container">
+  <div class="transactions-container">
+    <div>
+        <a href="{{ url_for('transactions.add_transaction')}}">
+            <button class="button">Add transaction</button>
+        </a>
+    </div>
 
-    <label for="currency">Choose currency:</label>
-    <select id="currency" name="currency">
-        {% for currency in currencies %}
-            <option value="{{ currency }}"> {{ currency }}</option>
-        {% endfor %}
-    </select>
-    <br><br>
-
-    <label for="content">Description: </label><br>
-    <textarea name="description" placeholder="Description" rows="3" cols="50"></textarea>
-    <br><br>
-
-    <button type="submit">Submit</button>
-</form>
+    <div>
+        <a href="{{ url_for('base.main')}}">
+            <button class="button">View all transactions</button>
+        </a>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
