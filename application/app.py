@@ -2,6 +2,7 @@ from flask import Flask
 
 from config import ApplicationConfig
 from blueprints import root, error_handler, transactions
+from middleware import Middleware
 
 
 def get_application() -> Flask:
@@ -12,6 +13,8 @@ def get_application() -> Flask:
 
     app.config.update(**config.dict())
     app.user_config = config
+
+    app.wsgi_app = Middleware(app.wsgi_app)
     return app
 
 
