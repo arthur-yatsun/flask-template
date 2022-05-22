@@ -1,0 +1,57 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+<div class="table-container">
+    <table>
+        <thead>
+        <tr>
+            <th>Number</th>
+            <th>Amount</th>
+            <th>Currency</th>
+            <th>Description</th>
+            <th>Created at</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for transaction in transactions %}
+            <tr class="cell">
+                <th>{{ loop.index }}</th>
+                <td>{{ transaction.amount }}</td>
+                <td>{{ transaction.currency.value }}</td>
+                <td>{{ transaction.description | truncate(30, True) }}</td>
+                <td>{{ transaction.created_at }}</td>
+                <td>
+                    <a class="table-button" href="{{ url_for('transactions.get_transaction', transaction_id=loop.index + page_size * (active_page-1))}}">Open</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        {% if active_page - 1 > 0 %}
+            <a href="{{ url_for('transactions.get_transactions', page=active_page-1)}}">&laquo;</a>
+        {% else %}
+            <a href="{{ url_for('transactions.get_transactions', page=active_page)}}">&laquo;</a>
+        {% endif %}
+
+        {% for page in range(1, pages + 1) %}
+            {% if loop.index == active_page %}
+                <a class="active" href="#">{{ page }}</a>
+            {% else %}
+                <a href="{{ url_for('transactions.get_transactions', page=page)}}">{{ page }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if active_page + 1 <= pages %}
+            <a href="{{ url_for('transactions.get_transactions', page=active_page+1)}}">&raquo;</a>
+        {% else %}
+            <a href="{{ url_for('transactions.get_transactions', page=active_page)}}">&raquo;</a>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}

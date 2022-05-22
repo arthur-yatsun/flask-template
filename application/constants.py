@@ -1,6 +1,8 @@
 from enum import Enum
 from typing import List
 
+PAGE_SIZE = 15
+
 
 class Environment(Enum):
     """Available environments"""
@@ -15,7 +17,7 @@ class Currency(Enum):
 
     USD = "USD"
     EUR = "EUR"
-    RUB = "RUB"
+    UAH = "UAH"
 
     @classmethod
     def get_currencies(cls) -> List:
@@ -33,7 +35,3 @@ class TransactionFields:
     DESCRIPTION = "description"
     CREATED_AT = "created_at"
 
-
-class SingTemplates:
-    PAY = "{amount}:{currency}:{shop_id}:{shop_order_id}{secret}"
-    BILL = "{amount}:{currency}:{payway}:{shop_id}:{shop_order_id}{secret}"
