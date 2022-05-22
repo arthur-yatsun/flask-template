@@ -1,6 +1,8 @@
 from enum import Enum
 from typing import List
 
+PAGE_SIZE = 15
+
 
 class Environment(Enum):
     """Available environments"""

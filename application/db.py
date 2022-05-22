@@ -35,7 +35,7 @@ class DBEngine:
                 session.commit()
             except Exception as err:
                 session.rollback()
-                # raise BaseSessionError(f"DB error occurred: {err}")
+                raise BaseSessionError(f"DB error occurred: {err}")
             finally:
                 session.close()
 
