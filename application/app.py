@@ -27,4 +27,4 @@ app.register_blueprint(transactions, url_prefix="/transactions")
 
 
 if __name__ == '__main__':
-    app.run(host="localhost")
+    app.run(host="0.0.0.0", port=5000)
